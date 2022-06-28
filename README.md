@@ -1,0 +1,1 @@
+NOTE: Adicionar .dockerignore para resolver erro de quanto nao acha o pacote para executar no package.json scripts

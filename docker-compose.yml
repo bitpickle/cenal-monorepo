@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+
+  webserver:
+    tty: true
+    depends_on:
+      - main-api
+    networks:
+      - app-network
+  
+  frontend:
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/var/www/app
+    networks:
+      - app-network
+
+  core:
+    env_file:
+      - ./core/.env
+    volumes:
+      - ./core:/var/www/app
+    networks:
+      - app-network
+      - db-network
+
+  keycloak:
+    environment:
+      - DB_VENDOR=MYSQL
+      - DB_ADDR=database-keycloak
+      - DB_DATABASE=${KEYCLOAK_DB_DATABASE}
+      - DB_USER=${KEYCLOAK_DB_USER}
+      - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - KEYCLOAK_FRONTEND_URL=${KEYCLOAK_BASE_URL_PUBLIC}
+      - KEYCLOAK_HTTP_PORT=8080
+    networks:
+      - app-network
+      - keycloak-db-network
+    depends_on:
+      - database-keycloak
+
+  database-keycloak:
+    image: mysql
+    volumes:
+      - ./infra/keycloak/mysql/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${KEYCLOAK_DB_PASSWORD_ROOT}
+      MYSQL_DATABASE: ${KEYCLOAK_DB_DATABASE}
+      MYSQL_USER: ${KEYCLOAK_DB_USER}
+      MYSQL_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+    networks:
+      - keycloak-db-network
+
+networks:
+  app-network:
+    driver: bridge
+  db-network:
+    driver: bridge
+  keycloak-db-network:
+    driver: bridge

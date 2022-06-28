@@ -1,0 +1,9 @@
+/storage/*
+!/storage/logo
+!/storage/font
+
+.env
+node_modules
+infra/keycloak/mysql/data/
+
+*dbdata
