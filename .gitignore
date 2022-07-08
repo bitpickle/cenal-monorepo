@@ -7,3 +7,5 @@ node_modules
 infra/keycloak/mysql/data/
 
 *dbdata
+
+.vscode

@@ -20,8 +20,6 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
-    volumes:
-      - /var/www/app/node_modules
     depends_on:
       - mariadb
     command: yarn start:dev
@@ -36,8 +34,6 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
-    volumes:
-      - /var/www/app/node_modules
     command: yarn dev
     
   mariadb:
