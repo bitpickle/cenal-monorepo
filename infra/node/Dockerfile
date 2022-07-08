@@ -8,16 +8,16 @@ USER node
 RUN mkdir tmp
 
 FROM base AS dependencies
-COPY --chown=node:node package.json yarn.lock ./
-RUN yarn install
+COPY --chown=node:node ./package*.json ./
+RUN npm install
 COPY --chown=node:node . .
 
 FROM dependencies AS build
-RUN yarn build
+RUN npm run build
 
 FROM base as production
 ENV NODE_ENV=production
 COPY --chown=node:node ./package*.json ./
-RUN yarn install --pure-lockfile --production
+RUN npm ci
 COPY --chown=node:node --from=build /var/www/app/build .
-CMD yarn start --production
+CMD dumb-init node dist/main
