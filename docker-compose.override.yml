@@ -22,19 +22,17 @@ services:
       SERVICE_TAGS: dev
     depends_on:
       - mariadb
-    command: yarn start:dev
+    command: npm run start:dev
 
   frontend:
     build:
       context: ./frontend
       dockerfile: ../infra/node/Dockerfile
       target: dependencies
-    ports:
-      - "3000:3000"
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
-    command: yarn dev
+    command: npm run dev
     
   mariadb:
     image: mariadb
