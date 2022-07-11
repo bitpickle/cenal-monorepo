@@ -20,4 +20,4 @@ ENV NODE_ENV=production
 COPY --chown=node:node ./package*.json ./
 RUN npm ci
 COPY --chown=node:node --from=build /var/www/app/build .
-CMD dumb-init node dist/main
+CMD npm run start:prod
