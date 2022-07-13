@@ -16,9 +16,20 @@ export class Aula extends CustomBaseEntity {
 
   @Column({
     nullable: false,
+  })
+  image: string;
+
+  @Column({
+    nullable: false,
     type: 'longtext',
   })
   written: string;
+
+  @Column({
+    nullable: false,
+    type: 'integer',
+  })
+  index: number;
 
   @ManyToOne((type) => Modulo, (modulo) => modulo.aulas, { eager: true })
   modulo: Modulo;

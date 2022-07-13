@@ -15,6 +15,11 @@ export class CreateAulaDTO {
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
+  image: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
   written: string;
 
   @IsUUID()
@@ -32,6 +37,11 @@ export class UpdateAulaDTO {
   @IsString()
   @ApiProperty()
   video?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  image?: string;
 
   @IsOptional()
   @IsString()
