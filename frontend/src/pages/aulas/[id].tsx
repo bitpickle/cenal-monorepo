@@ -12,12 +12,11 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 export async function getServerSideProps(context: any) {
   const aula: Aula = (
-    await coreApi().get(process.env.API_URL+`/api/aulas/${context.params.id}`)
+    await coreApi().get(`/api/aulas/${context.params.id}`)
   ).data;
 
   const playlist: Aula[] = (
-    await coreApi().get(
-      process.env.API_URL+`/api/modulos/${aula.modulo.id}/aulas`)
+    await coreApi().get(`/api/modulos/${aula.modulo.id}/aulas`)
   ).data;
 
   return {
