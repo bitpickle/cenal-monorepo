@@ -33,4 +33,8 @@ export class ModulosService {
   update(id: string, data: UpdateModuloDTO) {
     return this.modulosRepository.update({ id }, { name: data.name });
   }
+
+  async getAulas(id: string) {
+    return (await this.modulosRepository.findOne({ where: { id } })).aulas;
+  }
 }

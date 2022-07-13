@@ -38,4 +38,9 @@ export class ModulosController {
   remove(@Param('id') id: string) {
     return this.modulosService.remove(id);
   }
+
+  @Get(':id/aulas')
+  getAulas(@Param('id') id: string) {
+    return this.modulosService.getAulas(id);
+  }
 }
