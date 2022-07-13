@@ -12,12 +12,12 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 export async function getServerSideProps(context: any) {
   const aula: Aula = (
-    await axios.get(`http://webserver/api/aulas/${context.params.id}`)
+    await axios.get(process.env.API_URL+`/api/aulas/${context.params.id}`)
   ).data;
 
   const playlist: Aula[] = (
     await axios.get(
-      `http://webserver/api/modulos/${aula.modulo.id}/aulas`)
+      process.env.API_URL+`/api/modulos/${aula.modulo.id}/aulas`)
   ).data;
 
   return {
@@ -135,7 +135,7 @@ const Assistir: NextPage<Props> = (props: Props) => {
                 <div className="card-body p-0" style={{ overflowY: "scroll" }}>
                   {props.playlist.map((aula) => {
                     return (
-                      <Link href={`/aulas/${aula.id}`}>
+                      <Link key={aula.id} href={`/aulas/${aula.id}`}>
                         <div className={`alert ${aula.id === props.aula.id ? 'alert-dark' : 'alert-primary alert-hover'} row m-2`} style={{cursor: "pointer"}}>
                           <span className="col-10">{aula.title}</span>
                           <span className="col-2 text-right"><HiPlay/></span>

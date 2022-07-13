@@ -6,7 +6,7 @@ import AulaCard from '../../components/cards/AulaCard';
 import { Aula, Modulo, Tema } from '../../types/Cursos';
 
 export async function getServerSideProps(context: any) {
-  const { data } = await axios.get('http://webserver/api/temas');
+  const { data } = await axios.get(process.env.API_URL+'/api/temas');
 
   return {
     props: {
@@ -30,7 +30,7 @@ const Aulas: NextPage<Props> = (props: Props) => {
   }
 
   const handleModuloChange = async (moduloId: string) => {
-    const { data } = await axios.get('http://192.168.10.27/api/modulos/' + moduloId + '/aulas')
+    const { data } = await axios.get(process.env.API_URL+'/api/modulos/' + moduloId + '/aulas')
     setAulas(data);
   }
 
