@@ -11,12 +11,17 @@ export class AulasService {
     private aulasRepository: Repository<Aula>,
   ) {}
 
-  create(data: CreateAulaDTO): Promise<Aula> {
+  async create(data: CreateAulaDTO): Promise<Aula> {
     return this.aulasRepository.save({
       title: data.title,
       video: data.video,
       written: data.written,
       modulo: { id: data.modulo },
+      image: data.image,
+      index:
+        (await this.aulasRepository.count({
+          where: { modulo: { id: data.modulo } },
+        })) + 1,
     });
   }
 
@@ -38,6 +43,7 @@ export class AulasService {
       {
         title: data.title,
         video: data.video,
+        image: data.image,
         written: data.written,
       },
     );
