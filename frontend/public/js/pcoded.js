@@ -245,7 +245,6 @@ function addscroller() {
     menuclick();
     // Menu scrollbar start
     if (!!document.querySelector('.navbar-content')) {
-        await new Promise(r => setTimeout(r, 100));
         var px = new PerfectScrollbar('.navbar-content', {
             wheelSpeed: .5,
             swipeEasing: 0,
