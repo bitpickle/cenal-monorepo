@@ -21,5 +21,6 @@ export type Aula = {
   video: string;
   image: string;
   written: string;
+  index: number;
   modulo: Partial<Modulo>;
 }
