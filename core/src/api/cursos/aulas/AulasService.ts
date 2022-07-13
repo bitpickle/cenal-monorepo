@@ -26,7 +26,7 @@ export class AulasService {
   }
 
   findAll(): Promise<Aula[]> {
-    return this.aulasRepository.find();
+    return this.aulasRepository.find({ order: { index: 'ASC' } });
   }
 
   findOne(id: string): Promise<Aula> {

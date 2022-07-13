@@ -35,6 +35,14 @@ export class ModulosService {
   }
 
   async getAulas(id: string) {
-    return (await this.modulosRepository.findOne({ where: { id } })).aulas;
+    const aulas = (
+      await this.modulosRepository.findOne({
+        where: { id },
+      })
+    ).aulas;
+
+    return (await aulas).sort((a, b) => {
+      return a.index < b.index ? -1 : 1;
+    });
   }
 }
