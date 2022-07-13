@@ -3,20 +3,20 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { HiMenu, HiPlay, HiX } from "react-icons/hi";
-import axios from "axios";
 import { Aula } from "../../types/Cursos";
 import ReactMarkdown from 'react-markdown'
 import Link from "next/link";
+import { coreApi } from "../../hooks/coreApi";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
 export async function getServerSideProps(context: any) {
   const aula: Aula = (
-    await axios.get(process.env.API_URL+`/api/aulas/${context.params.id}`)
+    await coreApi().get(process.env.API_URL+`/api/aulas/${context.params.id}`)
   ).data;
 
   const playlist: Aula[] = (
-    await axios.get(
+    await coreApi().get(
       process.env.API_URL+`/api/modulos/${aula.modulo.id}/aulas`)
   ).data;
 

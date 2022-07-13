@@ -1,12 +1,13 @@
-import axios from 'axios'
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react';
 import AulaCard from '../../components/cards/AulaCard';
+import { coreApi } from '../../hooks/coreApi';
 import { Aula, Modulo, Tema } from '../../types/Cursos';
 
 export async function getServerSideProps(context: any) {
-  const { data } = await axios.get(process.env.API_URL+'/api/temas');
+  const { data } = await coreApi().get('/api/temas');
 
   return {
     props: {
@@ -30,7 +31,7 @@ const Aulas: NextPage<Props> = (props: Props) => {
   }
 
   const handleModuloChange = async (moduloId: string) => {
-    const { data } = await axios.get(process.env.API_URL+'/api/modulos/' + moduloId + '/aulas')
+    const { data } = await coreApi().get('/api/modulos/' + moduloId + '/aulas')
     setAulas(data);
   }
 
@@ -89,7 +90,7 @@ const Aulas: NextPage<Props> = (props: Props) => {
               {
                 aulas.map((aula) => {
                   return (
-                    <AulaCard title={aula.title} image={aula.image} id={aula.id} key={aula.id}/>
+                    <AulaCard index={aula.index} title={aula.title} image={aula.image} id={aula.id} key={aula.id}/>
                   )
                 })
               }
