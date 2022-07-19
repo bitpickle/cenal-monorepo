@@ -43,4 +43,9 @@ export class ModulosController {
   getAulas(@Param('id') id: string) {
     return this.modulosService.getAulas(id);
   }
+
+  @Get(':id/avaliacoes')
+  getAvaliacoes(@Param('id') id: string) {
+    return this.modulosService.getAvaliacoes(id);
+  }
 }

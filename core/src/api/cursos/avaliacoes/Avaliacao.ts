@@ -16,6 +16,6 @@ export class Avaliacao extends CustomBaseEntity {
   })
   perguntas: Pergunta[];
 
-  @ManyToOne((type) => Modulo, (modulo) => modulo.aulas)
+  @ManyToOne((type) => Modulo, (modulo) => modulo.aulas, { eager: true })
   modulo: Modulo;
 }
