@@ -45,4 +45,8 @@ export class ModulosService {
       return a.index < b.index ? -1 : 1;
     });
   }
+
+  async getAvaliacoes(id: string) {
+    return (await this.modulosRepository.findOne({ where: { id } })).avaliacoes;
+  }
 }
