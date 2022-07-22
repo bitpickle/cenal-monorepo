@@ -1,0 +1,42 @@
+.playlist { 
+    height: 82%; 
+    max-height: 450px;
+    max-width: 300px;
+    position: fixed;
+    right: 10px;
+}
+
+.playlist div::-webkit-scrollbar {
+  width: 8px;
+}
+
+.playlist div::-webkit-scrollbar-track {
+  background: rgb(232, 232, 232);
+}
+
+.playlist div::-webkit-scrollbar-thumb {
+  background-color: #4899c4;
+  border-radius: 20px;
+}
+
+@media only screen and (min-width: 769px) {
+    .playlist {
+        max-height: 82%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .playlist {
+        max-height: 450px;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+}
+
+
+.alert-hover:hover {
+  background-color: #6ba8c8;
+  color: white;
+}

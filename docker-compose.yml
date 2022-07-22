@@ -11,9 +11,9 @@ services:
   
   frontend:
     env_file:
-      - ./frontend/.env
+      - ./front/.env
     volumes:
-      - ./frontend:/var/www/app
+      - ./front:/var/www/app
     networks:
       - app-network
 
@@ -26,32 +26,41 @@ services:
       - app-network
       - db-network
 
-  keycloak:
-    environment:
-      - DB_VENDOR=MYSQL
-      - DB_ADDR=database-keycloak
-      - DB_DATABASE=${KEYCLOAK_DB_DATABASE}
-      - DB_USER=${KEYCLOAK_DB_USER}
-      - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
-      - KEYCLOAK_FRONTEND_URL=${KEYCLOAK_BASE_URL_PUBLIC}
-      - KEYCLOAK_HTTP_PORT=8080
-    networks:
-      - app-network
-      - keycloak-db-network
-    depends_on:
-      - database-keycloak
+  db-keycloak:
+      image: postgres:13.7
+      volumes:
+        - ./infra/keycloak/.dbata:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: keycloakDB
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: root
+      networks:
+        - keycloak-db-network
 
-  database-keycloak:
-    image: mysql
-    volumes:
-      - ./infra/keycloak/mysql/data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${KEYCLOAK_DB_PASSWORD_ROOT}
-      MYSQL_DATABASE: ${KEYCLOAK_DB_DATABASE}
-      MYSQL_USER: ${KEYCLOAK_DB_USER}
-      MYSQL_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
-    networks:
-      - keycloak-db-network
+  keycloak:
+      build:
+        context: ./infra/keycloak
+      environment:
+        KC_DB: postgres
+        KC_DB_URL: 'jdbc:postgresql://db-keycloak/keycloakDB'
+        KC_DB_USERNAME: keycloak
+        KC_DB_PASSWORD: root
+        KC_DB_SCHEMA: public
+        KC_HOSTNAME: "localhost"
+        KC_HOSTNAME_STRICT_HTTPS: 'false'
+        KC_HOSTNAME_STRICT: 'true'
+        KC_PROXY: passthrough
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: admin
+      depends_on:
+        - db-keycloak
+      networks:
+        - keycloak-db-network
+        - app-network
+      ports:
+        - 8080:8080
 
 networks:
   app-network:
