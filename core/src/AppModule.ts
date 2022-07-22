@@ -8,9 +8,9 @@ import { typeOrmConfigAsync } from './config/database';
   imports: [
     TypeOrmModule.forRootAsync(typeOrmConfigAsync),
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
-    ApiModule
+    ApiModule,
   ],
   controllers: [],
   providers: [],
